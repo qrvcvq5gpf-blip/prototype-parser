@@ -1,0 +1,475 @@
+```json
+{
+  "layoutStructure": {
+    "containerHierarchy": [
+      {
+        "level": 0,
+        "name": "PageContainer",
+        "description": "整体页面容器，白色背景",
+        "layout": "Flexbox",
+        "direction": "column"
+      },
+      {
+        "level": 1,
+        "name": "Header",
+        "description": "顶部信息栏，包含流水号和操作按钮",
+        "layout": "Flexbox",
+        "direction": "row",
+        "justifyContent": "space-between",
+        "alignItems": "center"
+      },
+      {
+        "level": 1,
+        "name": "MainContent",
+        "description": "主体内容区域，左右两栏布局",
+        "layout": "Flexbox",
+        "direction": "row"
+      },
+      {
+        "level": 2,
+        "name": "LeftPanel",
+        "description": "左侧对话/聊天记录区域",
+        "layout": "Flexbox",
+        "direction": "column",
+        "widthRatio": "约60%"
+      },
+      {
+        "level": 3,
+        "name": "ChatToolbar",
+        "description": "对话区顶部工具栏（筛选文本、开场白、篇幅等）",
+        "layout": "Flexbox",
+        "direction": "row",
+        "alignItems": "center"
+      },
+      {
+        "level": 3,
+        "name": "ChatMessageList",
+        "description": "对话消息列表，客服与客户对话气泡",
+        "layout": "Flexbox",
+        "direction": "column"
+      },
+      {
+        "level": 3,
+        "name": "AudioWaveform",
+        "description": "底部音频波形/时间轴区域",
+        "layout": "Flexbox",
+        "direction": "column"
+      },
+      {
+        "level": 2,
+        "name": "RightPanel",
+        "description": "右侧质检结果面板",
+        "layout": "Flexbox",
+        "direction": "column",
+        "widthRatio": "约40%"
+      },
+      {
+        "level": 3,
+        "name": "QualityScoreHeader",
+        "description": "质检结果标题栏（成绩结果/质检成绩）",
+        "layout": "Flexbox",
+        "direction": "row",
+        "justifyContent": "space-between"
+      },
+      {
+        "level": 3,
+        "name": "QualityScoreTable",
+        "description": "质检评分表格",
+        "layout": "Table"
+      },
+      {
+        "level": 3,
+        "name": "ViolationSection",
+        "description": "违规点/问题点区域，红色边框高亮",
+        "layout": "Flexbox",
+        "direction": "column"
+      }
+    ]
+  },
+  "spacingSpecification": {
+    "baseUnit": 4,
+    "pageContainer": {
+      "paddingTop": 16,
+      "paddingRight": 24,
+      "paddingBottom": 16,
+      "paddingLeft": 24
+    },
+    "header": {
+      "paddingVertical": 12,
+      "paddingHorizontal": 0,
+      "marginBottom": 16
+    },
+    "mainContent": {
+      "gap": 16
+    },
+    "leftPanel": {
+      "padding": 0
+    },
+    "chatToolbar": {
+      "height": 32,
+      "gap": 8,
+      "marginBottom": 12
+    },
+    "chatMessages": {
+      "messageGap": 16,
+      "bubblePadding": 12,
+      "avatarSize": 32,
+      "avatarToMessageGap": 8
+    },
+    "rightPanel": {
+      "padding": 12
+    },
+    "qualityTable": {
+      "cellPaddingVertical": 8,
+      "cellPaddingHorizontal": 12,
+      "rowGap": 0
+    },
+    "violationSection": {
+      "padding": 12,
+      "marginTop": 12,
+      "itemGap": 8
+    },
+    "audioWaveform": {
+      "height": 48,
+      "marginTop": 12
+    },
+    "actionButtons": {
+      "gap": 8,
+      "buttonPaddingVertical": 4,
+      "buttonPaddingHorizontal": 12
+    }
+  },
+  "componentInventory": [
+    {
+      "type": "Text/Label",
+      "id": "flowNumber",
+      "content": "流水号: S20260429235505047019OAF8CF4803622079",
+      "position": "Header左侧",
+      "fontSize": 14,
+      "semantic": "业务流水号标识"
+    },
+    {
+      "type": "ButtonGroup",
+      "id": "headerActions",
+      "position": "Header右侧",
+      "children": [
+        { "label": "文本下载", "variant": "outlined" },
+        { "label": "立即下载", "variant": "outlined" },
+        { "label": "录音试听", "variant": "outlined" },
+        { "label": "回传记录查询", "variant": "outlined" }
+      ],
+      "semantic": "页面级操作按钮组"
+    },
+    {
+      "type": "Toolbar",
+      "id": "chatToolbar",
+      "position": "左侧面板顶部",
+      "children": [
+        { "type": "Button", "label": "筛选文本", "variant": "text" },
+        { "type": "Toggle", "label": "开场白", "state": "active/green" },
+        { "type": "Text", "content": "开场 0" },
+        { "type": "Text", "content": "篇 0" },
+        { "type": "Button", "label": "上一个", "icon": "arrow" },
+        { "type": "Button", "label": "下一个", "icon": "arrow" },
+        { "type": "Input", "placeholder": "请输入关键词、序号、会话标识" }
+      ],
+      "semantic": "对话筛选和导航工具栏"
+    },
+    {
+      "type": "ChatMessageList",
+      "id": "chatMessages",
+      "position": "左侧面板主体",
+      "semantic": "客服与客户对话记录",
+      "messageTypes": [
+        {
+          "role": "agent",
+          "alignment": "left",
+          "avatarPosition": "left",
+          "bubbleColor": "#F5F5F5",
+          "highlightColor": "#FF4D4F (红色高亮违规文本)"
+        },
+        {
+          "role": "customer",
+          "alignment": "right",
+          "avatarPosition": "right",
+          "bubbleColor": "#FFFFFF"
+        }
+      ]
+    },
+    {
+      "type": "Badge/Tag",
+      "id": "messageTimestamp",
+      "position": "每条消息右下角",
+      "content": "字数/时间",
+      "semantic": "消息元数据（字数统计和时间戳）"
+    },
+    {
+      "type": "IconButton",
+      "id": "playMessageAudio",
+      "position": "每条消息右侧",
+      "icon": "播放/音频图标",
+      "semantic": "单条消息音频播放"
+    },
+    {
+      "type": "Button",
+      "id": "toggleView",
+      "position": "左侧面板与右侧面板分隔处",
+      "label": "分页",
+      "variant": "small",
+      "semantic": "切换视图按钮"
+    },
+    {
+      "type": "AudioPlayer",
+      "id": "audioWaveform",
+      "position": "左侧面板底部",
+      "components": [
+        { "type": "Waveform", "description": "音频波形可视化，蓝绿色" },
+        { "type": "Timeline", "description": "时间刻度轴" },
+        { "type": "PlaybackControl", "content": "00:10/03:06" }
+      ],
+      "semantic": "通话录音播放器"
+    },
+    {
+      "type": "Panel",
+      "id": "qualityResultPanel",
+      "position": "右侧面板",
+      "semantic": "质检结果展示面板",
+      "header": {
+        "title": "成绩结果（质检成绩）",
+        "actions": [
+          { "label": "质检时:", "type": "text" },
+          { "label": "申诉", "type": "button", "variant": "danger/red" }
+        ]
+      }
+    },
+    {
+      "type": "Table",
+      "id": "qualityScoreTable",
+      "position": "右侧面板上部",
+      "semantic": "质检评分明细表",
+      "columns": ["质检任务", "质检员", "复检员中", "质检备中", "评价"],
+      "estimatedRows": 7
+    },
+    {
+      "type": "AlertBox",
+      "id": "violationAlert",
+      "position": "右侧面板中部",
+      "borderColor": "#FF4D4F",
+      "content": "红色警告文本，描述违规详情",
+      "semantic": "违规提示/警告信息"
+    },
+    {
+      "type": "Tag",
+      "id": "violationTag",
+      "label": "违规点",
+      "position": "违规区域标题",
+      "backgroundColor": "#FF4D4F",
+      "textColor": "#FFFFFF",
+      "semantic": "违规点标签"
+    },
+    {
+      "type": "Accordion/Collapse",
+      "id": "violationDetails",
+      "position": "右侧面板下部",
+      "children": [
+        {
+          "title": "条件A 类/行为规范",
+          "action": "回放对应（命中）",
+          "actionColor": "#1890FF"
+        },
+        {
+          "title": "条件B 通用/文明用语",
+          "status": "未命中"
+        }
+      ],
+      "semantic": "违规条件折叠面板"
+    },
+    {
+      "type": "Pagination",
+      "id": "pagination",
+      "position": "右侧面板底部",
+      "components": [
+        { "label": "总量", "value": "50" },
+        { "label": "页码", "value": "1/1" }
+      ],
+      "semantic": "分页控件"
+    }
+  ],
+  "designTokens": {
+    "colors": {
+      "primary": "#1890FF",
+      "danger": "#FF4D4F",
+      "success": "#52C41A",
+      "textPrimary": "#333333",
+      "textSecondary": "#666666",
+      "textTertiary": "#999999",
+      "backgroundPage": "#F0F2F5",
+      "backgroundCard": "#FFFFFF",
+      "backgroundChatBubbleAgent": "#F5F5F5",
+      "backgroundChatBubbleCustomer": "#FFFFFF",
+      "borderDefault": "#D9D9D9",
+      "borderDanger": "#FF4D4F",
+      "highlightText": "#FF4D4F",
+      "tagViolation": "#FF4D4F",
+      "tagViolationText": "#FFFFFF",
+      "linkColor": "#1890FF",
+      "waveformColor": "#13C2C2",
+      "audioTimelineBackground": "#1A1A2E"
+    },
+    "typography": {
+      "h1": {
+        "fontSize": 20,
+        "lineHeight": 28,
+        "fontWeight": 600
+      },
+      "h2": {
+        "fontSize": 16,
+        "lineHeight": 24,
+        "fontWeight": 600
+      },
+      "body": {
+        "fontSize": 14,
+        "lineHeight": 22,
+        "fontWeight": 400
+      },
+      "caption": {
+        "fontSize": 12,
+        "lineHeight": 20,
+        "fontWeight": 400
+      },
+      "tableHeader": {
+        "fontSize": 14,
+        "lineHeight": 22,
+        "fontWeight": 500
+      },
+      "tableCell": {
+        "fontSize": 14,
+        "lineHeight": 22,
+        "fontWeight": 400
+      },
+      "buttonText": {
+        "fontSize": 14,
+        "lineHeight": 22,
+        "fontWeight": 400
+      },
+      "tag": {
+        "fontSize": 12,
+        "lineHeight": 20,
+        "fontWeight": 500
+      },
+      "fontFamily": "PingFang SC, Microsoft YaHei, sans-serif"
+    },
+    "borderRadius": {
+      "none": 0,
+      "small": 2,
+      "medium": 4,
+      "large": 8,
+      "button": 4,
+      "tag": 4,
+      "card": 4,
+      "chatBubble": 8
+    },
+    "shadows": {
+      "card": "0 1px 4px rgba(0, 0, 0, 0.08)",
+      "panel": "0 2px 8px rgba(0, 0, 0, 0.1)",
+      "none": "none"
+    }
+  },
+  "dataStructure": {
+    "tableDefinition": {
+      "tableName": "qualityInspectionScore",
+      "columns": [
+        {
+          "key": "taskName",
+          "title": "质检任务",
+          "dataType": "string",
+          "width": "auto",
+          "description": "质检任务名称，如服务态度、业务知识等"
+        },
+        {
+          "key": "inspector",
+          "title": "质检员",
+          "dataType": "string",
+          "width": 80,
+          "description": "质检员标识"
+        },
+        {
+          "key": "reviewer",
+          "title": "复检员中",
+          "dataType": "string",
+          "width": 80,
+          "description": "复检员状态"
+        },
+        {
+          "key": "inspectionStatus",
+          "title": "质检备中",
+          "dataType": "string",
+          "width": 80,
+          "description": "质检备注状态"
+        },
+        {
+          "key": "score",
+          "title": "评价",
+          "dataType": "number",
+          "width": 60,
+          "description": "评分数值，可为负数（扣分）或0"
+        }
+      ],
+      "sampleData": [
+        { "taskName": "服务态度", "inspector": "/", "reviewer": "/", "inspectionStatus": "/", "score": null },
+        { "taskName": "业务行为规范", "inspector": "全检件", "reviewer": "只检件", "inspectionStatus": "/", "score": -5 },
+        { "taskName": "未及时回复", "inspector": "全检件", "reviewer": "全检件", "inspectionStatus": "未命中", "score": 0 },
+        { "taskName": "用头用户...", "inspector": "全检件", "reviewer": "全检件", "inspectionStatus": "未命中", "score": 0 },
+        { "taskName": "服务禁忌...", "inspector": "全检件", "reviewer": "全检件", "inspectionStatus": "未命中", "score": 0 },
+        { "taskName": "未来回忆...", "inspector": "全检件", "reviewer": "全检件", "inspectionStatus": "未命中", "score": 0 }
+      ]
+    },
+    "formFields": {
+      "searchForm": [
+        {
+          "key": "keyword",
+          "label": "关键词搜索",
+          "type": "input",
+          "placeholder": "请输入关键词、序号、会话标识"
+        }
+      ],
+      "pageMetadata": [
+        {
+          "key": "flowNumber",
+          "label": "流水号",
+          "type": "readonly",
+          "value": "S20260429235505047019OAF8CF4803622079"
+        }
+      ]
+    },
+    "chatMessage": {
+      "fields": [
+        { "key": "id", "type": "string", "description": "消息唯一ID" },
+        { "key": "role", "type": "enum", "values": ["agent", "customer"], "description": "发送者角色" },
+        { "key": "content", "type": "string", "description": "消息文本内容" },
+        { "key": "timestamp", "type": "string", "description": "消息时间 HH:mm" },
+        { "key": "wordCount", "type": "number", "description": "消息字数" },
+        { "key": "duration", "type": "string", "description": "语音时长" },
+        { "key": "isViolation", "type": "boolean", "description": "是否为违规消息" },
+        { "key": "violationHighlight", "type": "string[]", "description": "违规高亮文本片段" }
+      ]
+    },
+    "violationDetail": {
+      "fields": [
+        { "key": "category", "type": "string", "description": "违规类别（条件A/条件B）" },
+        { "key": "ruleName", "type": "string", "description": "规则名称" },
+        { "key": "hitStatus", "type": "enum", "values": ["命中", "未命中"], "description": "命中状态" },
+        { "key": "playbackLink", "type": "string", "description": "回放对应链接" }
+      ]
+    },
+    "audioPlayback": {
+      "fields": [
+        { "key": "currentTime", "type": "string", "description": "当前播放时间" },
+        { "key": "totalDuration", "type": "string", "description": "总时长" },
+        { "key": "pageSize", "type": "number", "description": "每页条数，默认50" },
+        { "key": "currentPage", "type": "number", "description": "当前页码" }
+      ]
+    }
+  }
+}
+```
